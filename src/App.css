@@ -1,38 +1,149 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+
+body {
+    --padding-default: 8px;
+    --margin-default: 8px;
+    --text-color: #333;
+    --text-color-light: #fafafa;
+    --primary-color: #ffd454;
+    --primary-color-dark: #ebb000;
+    --background-color: #ffd454;
+    --selected-color: #9c27b0;
+
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Noto Sans JP', sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.main {
+    height: 100vh;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.primary {
+    background-color: var(--primary-color);
+    color: var(--text-color);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.primary-dark {
+    background-color: var(--primary-color-dark);
+    color: var(--text-color);
 }
 
-.App-link {
-  color: #61dafb;
+main {
+    display: flex;
+    flex-wrap: wrap;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+main > :first-child {
+    flex-basis: 300px;
+}
+
+main > :last-child {
+    flex-basis: auto;
+}
+
+header > h1 {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    padding: var(--padding-default);
+}
+
+.material-icons {
+    display: inline-flex;
+    vertical-align: middle;
+    align-items: center;
+}
+
+.history-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.date-selector > * {
+    margin: var(--margin-default);
+}
+
+.date-selector > input[type='date'] {
+    position: relative;
+    overflow: visible;
+    margin-top: 20px;
+}
+
+.date-selector > input[type='date']:before {
+    content: attr(title);
+    position: absolute;
+    top: -18px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.6rem;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1rem;
+    padding: var(--padding-default);
+}
+
+.waste-selector {
+    padding: var(--padding-default);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: .5rem;
+}
+
+.waste-checkbox {
+    height: 120px;
+    position: relative;
+    border: solid 1px var(--text-color-light);
+    border-radius: 4px;
+}
+
+.waste-checkbox > label {
+    background-image: url(/static/media/recycle_icons.b221e1a8.png);
+    background-repeat: no-repeat;
+    background-size: 470px;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.waste-checkbox > input[type='checkbox'] {
+    display: none;
+}
+
+.waste-checkbox > input[type='checkbox']:checked + label {
+    color: var(--text-color-light);
+    background-color: var(--selected-color);
+    font-weight: bold;
+}
+
+.waste-checkbox.waste-c > label {
+    background-position: 35% 71%;
+}
+
+.waste-checkbox.waste-p > label {
+    background-position: 7% 39%;
+}
+
+.waste-checkbox.waste-s > label {
+    background-position: 90% 99%;
+}
+
+.waste-checkbox.waste-u > label {
+    background-position: 90% 40%;
+}
+
+.waste-checkbox.waste-v > label {
+    background-position: 63% 5%;
 }

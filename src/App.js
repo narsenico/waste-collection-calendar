@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { createContext } from 'react';
 import './App.css';
+import WasteCollection from './components/WasteCollection';
+import Calendar from './data/calendar';
+import WasteHistory from './components/WasteHistory';
+
+const CalendarContext = createContext();
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div className="main primary">
+            <header className="primary-dark">
+                <h1>Waste Collection Calendar</h1>
+            </header>
+            <CalendarContext.Provider
+                value={new Calendar({ '2020-07-04': 'P' })}
+            >
+                <CalendarContext.Consumer>
+                    {(value) => (
+                        <main>
+                            <WasteCollection calendar={value} />
+                            <WasteHistory calendar={value} />
+                        </main>
+                    )}
+                </CalendarContext.Consumer>
+            </CalendarContext.Provider>
+            <footer>(c) narsenico</footer>
+        </div>
+    );
 }
 
 export default App;
