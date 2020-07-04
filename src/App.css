@@ -106,7 +106,7 @@ footer {
 }
 
 .waste-checkbox > label {
-    background-image: url(/static/media/recycle_icons.b221e1a8.png);
+    background-image: url(images/recycle_icons.png);
     background-repeat: no-repeat;
     background-size: 470px;
     overflow: hidden;
