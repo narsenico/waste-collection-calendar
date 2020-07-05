@@ -5,7 +5,7 @@ function Sender({ calendar, className }) {
     const test = async () => {
         try {
             const res = await axios.get(
-                'http://localhost:3001/hello'
+                'http://192.168.0.12:3001/hello'
             );
             console.log(res);
             alert('test ok');
@@ -20,7 +20,7 @@ function Sender({ calendar, className }) {
     const onClick = async () => {
         try {
             const res = await axios.put(
-                'http://localhost:3001/copywastedata',
+                'http://192.168.0.12:3001/copywastedata',
                 calendar.createWasteData()
             );
             console.log(res);
