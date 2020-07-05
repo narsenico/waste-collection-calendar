@@ -5,6 +5,7 @@ import Calendar from './data/calendar';
 import WasteHistory from './components/WasteHistory';
 import Uploader from './components/Uploader';
 import Downloader from './components/Downloader';
+import Sender from './components/Sender';
 
 const CalendarContext = createContext();
 
@@ -28,6 +29,10 @@ function App() {
                                     onLoad={(e) =>
                                         calendar.loadWasteData(e.detail)
                                     }
+                                />
+                                <Sender
+                                    className="footer-fa-end"
+                                    calendar={calendar}
                                 />
                                 <Downloader
                                     className="footer-far-end"
