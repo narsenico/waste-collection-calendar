@@ -59,7 +59,7 @@ const WasteSelector = ({
     }, [selected]);
 
     return (
-        <div className="waste-selector" ref={refContainer}>
+        <div className="waste-selector layout-grid" ref={refContainer}>
             <div className="waste-checkbox waste-c">
                 <input
                     type="checkbox"
@@ -68,7 +68,7 @@ const WasteSelector = ({
                     onChange={(e) => fireOnChange(e)}
                 />
                 <label htmlFor="waste_C">
-                    <span>Carta</span>
+                    <span className="shortcut">C</span>arta
                 </label>
             </div>
             <div className="waste-checkbox waste-p">
@@ -79,7 +79,7 @@ const WasteSelector = ({
                     onChange={(e) => fireOnChange(e)}
                 />
                 <label htmlFor="waste_P">
-                    <span>Plastica</span>
+                    <span className="shortcut">P</span>lastica
                 </label>
             </div>
             <div className="waste-checkbox waste-s">
@@ -90,7 +90,7 @@ const WasteSelector = ({
                     onChange={(e) => fireOnChange(e)}
                 />
                 <label htmlFor="waste_S">
-                    <span>Secco</span>
+                    <span className="shortcut">S</span>ecco
                 </label>
             </div>
             <div className="waste-checkbox waste-u">
@@ -101,7 +101,7 @@ const WasteSelector = ({
                     onChange={(e) => fireOnChange(e)}
                 />
                 <label htmlFor="waste_U">
-                    <span>Umido</span>
+                    <span className="shortcut">U</span>mido
                 </label>
             </div>
             <div className="waste-checkbox waste-v">
@@ -112,7 +112,7 @@ const WasteSelector = ({
                     onChange={fireOnChange}
                 />
                 <label htmlFor="waste_V">
-                    <span>Vetro</span>
+                    <span className="shortcut">V</span>etro
                 </label>
             </div>
         </div>

@@ -1,36 +1,40 @@
-//@ts-check
 import React, { useState, useEffect, useRef } from 'react';
+import { format, parse } from 'date-fns';
 
 import WasteSelector from './WasteSelector';
 
-const WasteCollection = ({ /** @type {Calendar} */ calendar }) => {
+const FORMAT = 'yyyy-MM-dd';
+const FORMAT_HUMAN = 'EEE dd MMM';
+
+/**
+ * Ritorna la data corrente formattata per essere leggibile da umani.
+ */
+function toHumanDate(date) {
+    try {
+        return format(parse(date, FORMAT, Date.now()), FORMAT_HUMAN);
+    } catch {
+        return '';
+    }
+}
+
+const WasteCollection = ({ calendar }) => {
     const refCalendar = useRef(calendar);
     // è nel formato riconosciuto dall'input yyyy-MM-dd
     const [wasteDate, setWasteDate] = useState(refCalendar.current.date);
-    const [humanDate, setHumanDate] = useState('');
     // array delle tipologie selezionate
     const [wasteSelection, setWasteSelection] = useState([]);
 
-    const storeCurrent = (selection) => {
+    const onWasteSelected = (selection) => {
         refCalendar.current.value = selection;
     };
 
-    const goNext = (e) => {
-        setWasteDate(refCalendar.current.nextDate());
-        e && e.preventDefault();
-    };
-
-    const goPrevious = (e) => {
-        setWasteDate(refCalendar.current.previousDate());
-        e && e.preventDefault();
-    };
-
     useEffect(() => {
+        // gestisco gli eventi da tastiera per cambiare data avanti/indietro
         const handler = (e) => {
             if (e.key === 'ArrowRight') {
-                goNext();
+                setWasteDate(refCalendar.current.nextDate());
             } else if (e.key === 'ArrowLeft') {
-                goPrevious();
+                setWasteDate(refCalendar.current.previousDate());
             }
         };
         document.addEventListener('keydown', handler);
@@ -41,34 +45,30 @@ const WasteCollection = ({ /** @type {Calendar} */ calendar }) => {
         // quando cambia la data aggiorno le tipologie selezionate
         refCalendar.current.date = wasteDate;
         setWasteSelection(refCalendar.current.arrayValue);
-        setHumanDate(refCalendar.current.humanDate);
     }, [wasteDate]);
 
     return (
-        <form>
-            <section className="date-selector">
-                <label htmlFor="collectionDate">Date</label>
-                <input
-                    type="date"
-                    id="collectionDate"
-                    title={humanDate}
-                    value={wasteDate}
-                    onChange={(e) => setWasteDate(e.target.value)}
-                />
-            </section>
-            <WasteSelector
-                selected={wasteSelection}
-                onChange={(e) => storeCurrent(e.detail)}
-            />
-            <section className="buttons">
-                <button onClick={goPrevious} title="Freccia sinistra">
-                    <i className="material-icons">navigate_before</i>{' '}
-                </button>
-                <button onClick={goNext} title="Freccia destra">
-                    <i className="material-icons">navigate_next</i>{' '}
-                </button>
-            </section>
-        </form>
+        <section>
+            <h2>Selettore</h2>
+            <form>
+                <section className="date-selector">
+                    <label htmlFor="collectionDate">Data</label>
+                    <input
+                        type="date"
+                        id="collectionDate"
+                        title={toHumanDate(wasteDate)}
+                        value={wasteDate}
+                        onChange={(e) => setWasteDate(e.target.value)}
+                    />
+                </section>
+                <section>
+                    <WasteSelector
+                        selected={wasteSelection}
+                        onChange={(e) => onWasteSelected(e.detail)}
+                    />
+                </section>
+            </form>
+        </section>
     );
 };
 

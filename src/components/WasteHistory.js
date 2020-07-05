@@ -1,4 +1,5 @@
 import React, { useEffect, useCallback, useReducer } from 'react';
+import WasteHistoryItem from './WasteHistoryItem';
 
 function itemReducer(state, action) {
     switch (action.type) {
@@ -15,7 +16,7 @@ function itemReducer(state, action) {
     }
 }
 
-const WasteHistory = ({ /** @type {Calendar} */ calendar }) => {
+const WasteHistory = ({ calendar }) => {
     const [items, dispacthItems] = useReducer(itemReducer, {
         ...calendar._data,
     });
@@ -42,15 +43,20 @@ const WasteHistory = ({ /** @type {Calendar} */ calendar }) => {
     }, [calendar, onChangeValue, onLoadWasteData]);
 
     return (
-        <div className="history-container">
-            {Object.keys(items)
-                .sort()
-                .map((date) => (
-                    <div key={date}>
-                        xxx{date}: {items[date]}
-                    </div>
-                ))}
-        </div>
+        <section>
+            <h2>Storico</h2>
+            <div className="history-container">
+                {Object.keys(items)
+                    .sort()
+                    .map((date) => (
+                        <WasteHistoryItem
+                            key={date}
+                            date={date}
+                            selection={items[date]}
+                        />
+                    ))}
+            </div>
+        </section>
     );
 };
 

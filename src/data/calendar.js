@@ -1,7 +1,17 @@
 import { format, parse, add } from 'date-fns';
 
 const FORMAT = 'yyyy-MM-dd';
-const FORMAT_HUMAN = 'EEE dd MMM';
+
+const WASTEDATA_TEMPLATE = {
+    "types": {
+        "P": "Plastica",
+        "C": "Carta",
+        "U": "Umido",
+        "V": "Vetro",
+        "S": "Secco"
+    },
+    "calendar": {}
+}
 
 export default class Calendar {
     _data = {};
@@ -9,23 +19,12 @@ export default class Calendar {
     _events = {
         changedate: [],
         changevalue: [],
-        loadwastedata: []
+        loadwastedata: [],
     };
 
     constructor(data = {}) {
         this._data = data;
         this._date = format(Date.now(), FORMAT);
-    }
-
-    /**
-     * Ritorna la data corrente formattata per essere leggibile da umani.
-     */
-    get humanDate() {
-        try {
-            return format(parse(this._date, FORMAT, Date.now()), FORMAT_HUMAN);
-        } catch {
-            return '';
-        }
     }
 
     /**
@@ -108,6 +107,20 @@ export default class Calendar {
     }
 
     /**
+     * Crea un oggetto nel formato wastedata.json.
+     *
+     * @returns {Object} wastedata
+     */
+    createWasteData() {
+        return Object.assign({}, WASTEDATA_TEMPLATE, {
+            calendar: Object.keys(this._data).reduce((m, p) => {
+                m[p.replace(/-/g, '')] = this._data[p];
+                return m;
+            }, {}),
+        });
+    }
+
+    /**
      * Ritorna le tipologie di rifiuti per la data in parametro.
      *
      * @param {String} date data per cui si vuole recuperare il valore.
@@ -142,10 +155,6 @@ export default class Calendar {
             }),
             FORMAT
         ));
-    }
-
-    toJSON() {
-        return JSON.stringify(this._data);
     }
 
     fire(eventType, args = []) {
@@ -183,5 +192,9 @@ export default class Calendar {
         if (idx >= 0) {
             handlers.splice(idx, 1);
         }
+    }
+
+    toJSON() {
+        return JSON.stringify(this._data);
     }
 }

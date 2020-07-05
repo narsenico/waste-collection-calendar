@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 
-const Uploader = ({ onLoad }) => {
+const Uploader = ({ className, onLoad }) => {
     const refFile = useRef();
 
     const loadJSONFile = (file) => {
@@ -40,7 +40,8 @@ const Uploader = ({ onLoad }) => {
     };
 
     return (
-        <div>
+        <div className={className}>
+            <label>Carica file</label>
             <input type="file" ref={refFile} onChange={onFileChange} />
         </div>
     );
