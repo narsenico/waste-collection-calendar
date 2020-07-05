@@ -1,8 +1,4 @@
-import React, {
-    useEffect,
-    useCallback,
-    useReducer,
-} from 'react';
+import React, { useEffect, useCallback, useReducer } from 'react';
 
 function itemReducer(state, action) {
     switch (action.type) {
@@ -12,6 +8,8 @@ function itemReducer(state, action) {
         case 'delete':
             delete state[action.date];
             return { ...state };
+        case 'swap':
+            return { ...action.newState };
         default:
             throw new Error('Wrong action');
     }
@@ -30,18 +28,28 @@ const WasteHistory = ({ /** @type {Calendar} */ calendar }) => {
         }
     }, []);
 
+    const onLoadWasteData = useCallback((calendar) => {
+        dispacthItems({ type: 'swap', newState: calendar._data });
+    }, []);
+
     useEffect(() => {
         calendar.on('changevalue', onChangeValue);
-        return () => calendar.off('changevalue', onChangeValue);
-    }, [calendar, onChangeValue]);
+        calendar.on('loadwastedata', onLoadWasteData);
+        return () => {
+            calendar.off('changevalue', onChangeValue);
+            calendar.off('loadwastedata', onLoadWasteData);
+        };
+    }, [calendar, onChangeValue, onLoadWasteData]);
 
     return (
         <div className="history-container">
-            {Object.keys(items).sort().map((date) => (
-                <div key={date}>
-                    xxx{date}: {items[date]}
-                </div>
-            ))}
+            {Object.keys(items)
+                .sort()
+                .map((date) => (
+                    <div key={date}>
+                        xxx{date}: {items[date]}
+                    </div>
+                ))}
         </div>
     );
 };

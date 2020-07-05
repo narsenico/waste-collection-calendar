@@ -30,16 +30,6 @@ body {
 }
 
 main {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-main > :first-child {
-    flex-basis: 300px;
-}
-
-main > :last-child {
-    flex-basis: auto;
 }
 
 header > h1 {
@@ -100,6 +90,7 @@ footer {
 
 .waste-checkbox {
     height: 120px;
+    width: 120px;
     position: relative;
     border: solid 1px var(--text-color-light);
     border-radius: 4px;
@@ -129,21 +120,21 @@ footer {
 }
 
 .waste-checkbox.waste-c > label {
-    background-position: 35% 71%;
+    background-position: 33% 71%;
 }
 
 .waste-checkbox.waste-p > label {
-    background-position: 7% 39%;
+    background-position: 3% 39%;
 }
 
 .waste-checkbox.waste-s > label {
-    background-position: 90% 99%;
+    background-position: 94% 99%;
 }
 
 .waste-checkbox.waste-u > label {
-    background-position: 90% 40%;
+    background-position: 94% 40%;
 }
 
 .waste-checkbox.waste-v > label {
-    background-position: 63% 5%;
+    background-position: 64% 5%;
 }

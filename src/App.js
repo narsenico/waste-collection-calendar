@@ -3,6 +3,7 @@ import './App.css';
 import WasteCollection from './components/WasteCollection';
 import Calendar from './data/calendar';
 import WasteHistory from './components/WasteHistory';
+import Uploader from './components/Uploader';
 
 const CalendarContext = createContext();
 
@@ -13,13 +14,16 @@ function App() {
                 <h1>Waste Collection Calendar</h1>
             </header>
             <CalendarContext.Provider
-                value={new Calendar({ '2020-07-04': 'P' })}
+                value={new Calendar()}
             >
                 <CalendarContext.Consumer>
-                    {(value) => (
+                    {(calendar) => (
                         <main>
-                            <WasteCollection calendar={value} />
-                            <WasteHistory calendar={value} />
+                            <Uploader
+                                onLoad={(e) => calendar.loadWasteData(e.detail)}
+                            />
+                            <WasteCollection calendar={calendar} />
+                            <WasteHistory calendar={calendar} />
                         </main>
                     )}
                 </CalendarContext.Consumer>
