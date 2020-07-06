@@ -1,17 +1,25 @@
 import { format, parse, add } from 'date-fns';
+import axios from 'axios';
+
+// TODO: possono essere usate variabili di ambiente che iniziano con REACT_APP_
+// TODO: si può usare dotenv con react-script?
+const SERVER_BASE_URL =
+    process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3001'
+        : 'http://192.168.0.12:3001';
 
 const FORMAT = 'yyyy-MM-dd';
 
 const WASTEDATA_TEMPLATE = {
-    "types": {
-        "P": "Plastica",
-        "C": "Carta",
-        "U": "Umido",
-        "V": "Vetro",
-        "S": "Secco"
+    types: {
+        P: 'Plastica',
+        C: 'Carta',
+        U: 'Umido',
+        V: 'Vetro',
+        S: 'Secco',
     },
-    "calendar": {}
-}
+    calendar: {},
+};
 
 export default class Calendar {
     _data = {};
@@ -155,6 +163,33 @@ export default class Calendar {
             }),
             FORMAT
         ));
+    }
+
+    reset() {
+        this._data = {};
+
+        this.fire('loadwastedata');
+    }
+
+    async loadFromRemote() {
+        const res = await axios.get(`${SERVER_BASE_URL}/wastedata`, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        this.loadWasteData(JSON.parse(res.data));
+    }
+
+    async saveToRemote() {
+        await axios.put(
+            `${SERVER_BASE_URL}/wastedata`,
+            this.createWasteData(),
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
     }
 
     fire(eventType, args = []) {

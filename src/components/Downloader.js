@@ -1,7 +1,7 @@
 import React from 'react';
 
 function Downloader({ className, calendar }) {
-    const onClick = () => {
+    const download = () => {
         try {
             // estraggo i dati da Calendar nel formato wastedata
             const data = calendar.createWasteData();
@@ -25,7 +25,7 @@ function Downloader({ className, calendar }) {
 
     return (
         <div className={className}>
-            <button onClick={onClick}>
+            <button onClick={download}>
                 <span className="material-icons">get_app</span>
             </button>
         </div>

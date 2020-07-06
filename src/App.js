@@ -5,7 +5,8 @@ import Calendar from './data/calendar';
 import WasteHistory from './components/WasteHistory';
 import Uploader from './components/Uploader';
 import Downloader from './components/Downloader';
-import Sender from './components/Sender';
+import RemoteController from './components/RemoteController';
+import Reset from './components/Reset';
 
 const CalendarContext = createContext();
 
@@ -30,11 +31,15 @@ function App() {
                                         calendar.loadWasteData(e.detail)
                                     }
                                 />
-                                <Sender
-                                    className="footer-fa-end"
+                                <RemoteController
+                                    className="footer-far-end"
                                     calendar={calendar}
                                 />
                                 <Downloader
+                                    className="footer-far-end"
+                                    calendar={calendar}
+                                />
+                                <Reset
                                     className="footer-far-end"
                                     calendar={calendar}
                                 />
