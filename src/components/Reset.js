@@ -7,7 +7,7 @@ function Reset({ className, calendar }) {
 
     return (
         <div className={className}>
-            <button onClick={reset}>
+            <button onClick={reset} title="Pulisci dati">
                 <span className="material-icons">clear</span>
             </button>
         </div>

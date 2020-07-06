@@ -42,6 +42,17 @@ const WasteCollection = ({ calendar }) => {
     }, []);
 
     useEffect(() => {
+        const handler = () => {
+            // TODO: come faccio a essere sicuro che questi dati si riferiscono a wasteDate?
+            //  d'altra parte non voglio controllare se wasteDate == calendar.date perché mi toccherebbe
+            //  passarla nei riferimenti di useEffect
+            setWasteSelection(refCalendar.current.arrayValue);
+        };
+        calendar.on('loadwastedata', handler);
+        return () => calendar.off('loadwastedata', handler);
+    }, [calendar]);
+
+    useEffect(() => {
         // quando cambia la data aggiorno le tipologie selezionate
         refCalendar.current.date = wasteDate;
         setWasteSelection(refCalendar.current.arrayValue);

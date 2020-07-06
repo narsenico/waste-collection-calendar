@@ -1,12 +1,8 @@
 import { format, parse, add } from 'date-fns';
 import axios from 'axios';
 
-// TODO: possono essere usate variabili di ambiente che iniziano con REACT_APP_
-// TODO: si può usare dotenv con react-script?
-const SERVER_BASE_URL =
-    process.env.NODE_ENV === 'development'
-        ? 'http://localhost:3001'
-        : 'http://192.168.0.12:3001';
+const SERVER_BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
+console.log('Base url:', SERVER_BASE_URL);
 
 const FORMAT = 'yyyy-MM-dd';
 

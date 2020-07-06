@@ -25,7 +25,7 @@ function Downloader({ className, calendar }) {
 
     return (
         <div className={className}>
-            <button onClick={download}>
+            <button onClick={download} title="Scarica dati">
                 <span className="material-icons">get_app</span>
             </button>
         </div>
