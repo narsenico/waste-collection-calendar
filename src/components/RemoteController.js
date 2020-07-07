@@ -36,6 +36,11 @@ function RemoteController({ calendar, className }) {
                     if (e.detail) {
                         try {
                             await calendar.applyChangesToRemote();
+                            setMessage({
+                                type: 'info',
+                                text:
+                                    'Modifiche applicate, potrebbe volerci qualche secondo perchè diventino effettive',
+                            });
                         } catch (e) {
                             console.error(e);
                             setMessage({
@@ -47,7 +52,7 @@ function RemoteController({ calendar, className }) {
                             });
                         }
                     }
-                }
+                },
             });
             // TODO: come fare per aggiornare browser? serve?
         } catch (e) {
@@ -74,12 +79,7 @@ function RemoteController({ calendar, className }) {
             <button onClick={apply} title="Applica modifiche">
                 <span className="material-icons">save</span>
             </button>
-            {message ? (
-                <MessageBox
-                    options={message}
-                    show
-                />
-            ) : null}
+            {message ? <MessageBox options={message} show /> : null}
         </div>
     );
 }
