@@ -188,6 +188,12 @@ export default class Calendar {
         );
     }
 
+    async applyChangesToRemote() {
+        await axios.post(
+            `${SERVER_BASE_URL}/apply`
+        );
+    }
+
     fire(eventType, args = []) {
         this._events[eventType].forEach((cb) => cb(this, ...args));
     }

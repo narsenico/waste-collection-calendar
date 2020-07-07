@@ -1,35 +1,70 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
+import MessageBox from './MessageBox';
 
 function RemoteController({ calendar, className }) {
+    const [message, setMessage] = useState();
+
     const load = useCallback(async () => {
         try {
             await calendar.loadFromRemote();
-            alert('Wastedata caricato correttamente.');
+            setMessage({
+                type: 'info',
+                text: 'Wastedata caricato correttamente.',
+            });
         } catch (e) {
             console.error(e);
-            alert(
-                `Si è verificato un errore durante la lettura dei dati.\nControllare i log del browser per maggiori informazioni.`
-            );
+            setMessage({
+                type: 'error',
+                text: [
+                    'Si è verificato un errore durante la lettura dei dati.',
+                    'Controllare i log del browser per maggiori informazioni.',
+                ],
+            });
         }
     }, [calendar]);
 
     const apply = async () => {
         try {
             await calendar.saveToRemote();
-            alert('Wastedata inviato correttamente.');
-            // TODO: riavviare rednode node-red-restart
+            setMessage({
+                type: 'confirm',
+                text: [
+                    'Wastedata inviato correttamente.',
+                    'Applicare le modifiche?',
+                ],
+                onClose: async (e) => {
+                    if (e.detail) {
+                        try {
+                            await calendar.applyChangesToRemote();
+                        } catch (e) {
+                            console.error(e);
+                            setMessage({
+                                type: 'error',
+                                text: [
+                                    'Si è verificato un errore durante la lettura dei dati.',
+                                    'Controllare i log del browser per maggiori informazioni.',
+                                ],
+                            });
+                        }
+                    }
+                }
+            });
             // TODO: come fare per aggiornare browser? serve?
         } catch (e) {
             console.error(e);
-            alert(
-                `Si è verificato un errore durante l'invio dei dati.\nControllare i log del browser per maggiori informazioni.`
-            );
+            setMessage({
+                type: 'error',
+                text: [
+                    'Si è verificato un errore durante la lettura dei dati.',
+                    'Controllare i log del browser per maggiori informazioni.',
+                ],
+            });
         }
     };
 
     useEffect(() => {
         load();
-    }, [load])
+    }, [load]);
 
     return (
         <div className={className}>
@@ -39,6 +74,12 @@ function RemoteController({ calendar, className }) {
             <button onClick={apply} title="Applica modifiche">
                 <span className="material-icons">save</span>
             </button>
+            {message ? (
+                <MessageBox
+                    options={message}
+                    show
+                />
+            ) : null}
         </div>
     );
 }

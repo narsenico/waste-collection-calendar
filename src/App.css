@@ -61,6 +61,36 @@ label ~ input {
     margin-left: 4px;
 }
 
+dialog {
+    background-color: var(--primary-color-dark);
+    border: solid 1px;
+    border-radius: var(--border-radius);
+    box-shadow: 3px 4px 5px 0px rgba(0, 0, 0, 0.38);
+}
+
+dialog > form > .dialog-icon {
+    text-align: center;
+}
+
+dialog > form > .dialog-icon > .material-icons {
+    font-size: 3em;
+}
+
+dialog > form > p {
+    text-align: justify;
+}
+
+dialog > form > menu {
+    text-align: center;
+    padding: 8px 0 0px 0;
+    margin: 24px 0 0 0;
+    border-top: solid 1px var(--text-color);
+}
+
+dialog > form > menu > button {
+    margin: 0 4px;
+}
+
 .primary {
     background-color: var(--primary-color);
     color: var(--text-color);
